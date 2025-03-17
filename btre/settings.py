@@ -15,6 +15,17 @@ import os
 
 from dotenv import load_dotenv
 
+from supabase import create_client
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+# Ensure SUPABASE_URL is not None
+if not SUPABASE_URL:
+    raise ValueError("SUPABASE_URL is not set in environment variables")
+# Create Supabase Client
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+# Correct MEDIA_URL format
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/media/"
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -158,7 +169,7 @@ STATICFILES_DIRS = [
 
 # Media Folder Settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+# MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
